@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NewAPI 令牌余额查询</title>
+    <title>蓝墨水API 令牌余额查询</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     
@@ -36,10 +36,6 @@
                 box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
             }
             .btn-hover {
-                /* 要使用 @apply 指令，需要在文件顶部添加 Tailwind 的 JIT 编译器支持 */
-                /* 当前文件已经引入了 Tailwind CDN，问题可能是缺少 type="text/tailwindcss" 的处理 */
-                /* 此处代码无误，错误可能是由于开发环境未正确配置 Tailwind 导致 */
-                /* 如果使用 CDN 版本，需要确保使用 JIT 模式 */
                 @apply transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5;
             }
         }
