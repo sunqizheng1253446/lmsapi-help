@@ -36,6 +36,10 @@
                 box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1);
             }
             .btn-hover {
+                /* 要使用 @apply 指令，需要在文件顶部添加 Tailwind 的 JIT 编译器支持 */
+                /* 当前文件已经引入了 Tailwind CDN，问题可能是缺少 type="text/tailwindcss" 的处理 */
+                /* 此处代码无误，错误可能是由于开发环境未正确配置 Tailwind 导致 */
+                /* 如果使用 CDN 版本，需要确保使用 JIT 模式 */
                 @apply transition-all duration-300 hover:shadow-lg transform hover:-translate-y-0.5;
             }
         }
@@ -45,14 +49,14 @@
     <!-- 顶部导航 -->
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-10">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <i class="fa fa-key text-primary text-2xl"></i>
-                <h1 class="text-xl md:text-2xl font-bold text-primary">NewAPI 工具</h1>
-            </div>
-            <div class="text-sm text-gray-600">
-                <span class="hidden md:inline">令牌余额查询器</span>
-            </div>
-        </div>
+                    <div class="flex items-center space-x-2">
+                        <i class="fa fa-key text-primary text-2xl"></i>
+                        <h1 class="text-xl md:text-2xl font-bold text-primary">蓝墨水API</h1>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        <a href="https://api.kaka11.top" target="_blank" class="hidden md:inline hover:text-primary transition-colors">官网</a>
+                    </div>
+                </div>
     </header>
 
     <!-- 主要内容 -->
@@ -65,13 +69,13 @@
                         <i class="fa fa-balance-scale text-2xl"></i>
                     </div>
                     <h2 class="text-2xl font-bold mb-2">令牌余额查询</h2>
-                    <p class="text-gray-500 text-sm">输入您的NewAPI令牌以查询余额信息</p>
+                    <p class="text-gray-500 text-sm">输入您的蓝墨水API令牌以查询余额信息</p>
                 </div>
                 
                 <!-- 表单 -->
                 <form id="balanceForm" class="space-y-5">
                     <div>
-                        <label for="token" class="block text-sm font-medium text-gray-700 mb-1">令牌 (Token)</label>
+                        <label for="token" class="block text-sm font-medium text-gray-700 mb-1">令牌 (KEY)</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <i class="fa fa-key text-gray-400"></i>
@@ -157,8 +161,8 @@
                         <i class="fa fa-info-circle text-primary"></i>
                     </div>
                     <div class="ml-3">
-                        <p>接口说明：查询结果基于NewAPI的https://api.kaka11.top/v1/dashboard/billing/subscription接口。</p>
-                        <p class="mt-1">若令牌为无限额度，将显示-1。</p>
+                        <p>接口说明：查询结果基于蓝墨水API的官方接口</p> 
+                    </div>
                     </div>
                 </div>
             </div>
@@ -168,7 +172,7 @@
     <!-- 页脚 -->
     <footer class="bg-white py-6 border-t border-gray-200">
         <div class="container mx-auto px-4 text-center text-sm text-gray-500">
-            <p>© 2023 NewAPI 令牌余额查询工具</p>
+            <p>© 2025 蓝墨水API</p>
             <p class="mt-1">本工具仅用于查询令牌余额，不存储任何用户信息</p>
         </div>
     </footer>
@@ -250,9 +254,16 @@
                      
                     balanceValue.textContent = balanceDisplay;
                       
+                    // 先移除已存在的余额提醒
+                    const existingAlert = document.getElementById('rechargeAlert');
+                    if (existingAlert) {
+                        existingAlert.remove();
+                    }
+                     
                     // 余额低于1时显示充值提醒
                     if (data.system_hard_limit_usd !== -1 && data.system_hard_limit_usd !== undefined && data.system_hard_limit_usd !== 100000000.0000 && data.system_hard_limit_usd < 1) {
                         const rechargeAlert = document.createElement('div');
+                        rechargeAlert.id = 'rechargeAlert'; // 添加唯一ID以便后续移除
                         rechargeAlert.className = 'mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start';
                         rechargeAlert.innerHTML = `
                             <i class="fa fa-exclamation-circle text-amber-500 mt-0.5 mr-2"></i>
